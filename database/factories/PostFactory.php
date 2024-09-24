@@ -21,7 +21,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->title(),
+            'title' => fake()->word(),
             'url_clean' => fake()->url(),
             'content' => fake()->randomHtml(),
             'category_id' => Category::all()->random()->id,
