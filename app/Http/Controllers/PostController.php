@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
@@ -14,6 +17,12 @@ class PostController extends Controller
     {
         $posts = Post::all();
         return view('post.index', compact('posts'));
+    }
+
+    public function myPosts()
+    {
+        $posts = Post::where('user_id', Auth::id())->get();
+        return view('post.my-posts', compact('posts'));
     }
 
     /**
@@ -43,9 +52,9 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post):View
     {
-        //
+        return view('post.edit', compact('post'));
     }
 
     /**
@@ -59,8 +68,11 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+    public function destroy(Post $post):RedirectResponse
     {
-        //
+        $post->delete();
+//        return redirect()->route('post.my-posts')->with('success', __('Post eliminat correctament'));
+        return redirect()->route('post.my-posts');
     }
 }

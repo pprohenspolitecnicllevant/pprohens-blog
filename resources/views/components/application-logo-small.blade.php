@@ -4,6 +4,6 @@
 </svg>
 --}}
 <div class="image-container">
-    <img src="{{ asset('assets/img/logo.png') }}" id="logo" alt="logo">
+    <img src="{{ asset('assets/img/logo.png') }}" id="logo" alt="logo" width="80px">
     {{--    <img src="{{ asset('assets/img/dark/logo_transparent_cut.png') }}" id="dark-fisionote-logo" alt="fisionote dark logo" width="350px">--}}
 </div>
