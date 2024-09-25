@@ -23,7 +23,7 @@ class PostFactory extends Factory
         return [
             'title' => fake()->word(),
             'url_clean' => fake()->url(),
-            'content' => fake()->randomHtml(),
+            'content' => fake()->paragraphs(2, true),
             'category_id' => Category::all()->random()->id,
             'user_id' => User::all()->random()->id,
         ];
