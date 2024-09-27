@@ -1,8 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __("Els meus posts") }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Els meus Posts') }}
+            </h2>
+            @if($message = Session::get('success'))
+                <x-dismiss-alert :message="$message"/>
+            @endif
+            <a href="{{ route('post.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                {{ __('Crear nou Post') }}
+            </a>
+        </div>
+
     </x-slot>
 
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -11,7 +20,13 @@
                         <article class="flex flex-col items-start justify-between bg-white rounded-lg shadow-md p-6">
                             <div class="flex items-center gap-x-4 text-xs">
                                 <time datetime="2020-03-16" class="text-gray-500">{{ $post->created_at }}</time>
-                                <a href="#" class="relative ml-2 z-10 rounded-full bg-blue-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-blue-300"><strong>Category:</strong> {{ $post->category->title }}</a>
+                                @if($post->posted == "yes")
+                                    <span class="relative ml-2 z-10 rounded-full bg-green-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-green-300"> Publicat</span>
+                                @else
+                                    <span class="relative ml-2 z-10 rounded-full bg-red-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-red-300">No publicat</span>
+                                @endif
+                                <span class="relative ml-2 z-10 rounded-full bg-blue-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-blue-300"><strong>Category:</strong> {{ $post->category->title }}</span>
+
                             </div>
                             <div class="group relative">
                                 <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
@@ -34,13 +49,6 @@
                                 <a href="{{ route('post.edit', $post) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
                                     {{ __('Editar Post') }}
                                 </a>
-                                <form action="{{route('post.destroy' , $post)}}" method="POST" >
-                                    @method('DELETE')
-                                    @csrf
-                                    <x-danger-button class="ms-3">
-                                        {{ __('Eliminar Post') }}
-                                    </x-danger-button>
-                                </form>
                             </div>
                         </article>
                     @endforeach

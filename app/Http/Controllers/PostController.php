@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -15,13 +17,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy("created_at" , "desc")->where('posted', 'yes')->get();
         return view('post.index', compact('posts'));
     }
 
     public function myPosts()
     {
-        $posts = Post::where('user_id', Auth::id())->get();
+        $posts = Post::orderBy("created_at" , "desc")->where('user_id', Auth::id())->get();
         return view('post.my-posts', compact('posts'));
     }
 
@@ -30,15 +32,27 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::all();
+        $categories = Category::all();
+        return view('post.create', compact('categories', 'tags'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostRequest $request):RedirectResponse
     {
-        //
+        $post = new Post();
+
+        $post->title = $request->title;
+        $post->url_clean = $request->url_clean;
+        $post->content = $request->content;
+        $post->category_id = $request->category_id;
+        $post->user_id= Auth::user()->id;
+
+        $post->save();
+
+        return redirect()->route('post.my-posts')->with('success', __('Post creat correctament'));
     }
 
     /**
@@ -54,15 +68,19 @@ class PostController extends Controller
      */
     public function edit(Post $post):View
     {
-        return view('post.edit', compact('post'));
+        $tags = Tag::all();
+        $categories = Category::all();
+        return view('post.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, Post $post):RedirectResponse
     {
-        //
+        $post->update($request->all());
+        return redirect()->route('post.my-posts')->with('success', __('Post actualitzat correctament'));
+
     }
 
     /**
@@ -72,6 +90,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return back();
+        return back()->with('success', __('Post ELIMINAT correctament'));
     }
 }

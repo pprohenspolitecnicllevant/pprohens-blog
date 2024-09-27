@@ -7,7 +7,7 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto mt-4 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 pt-4 sm:mt-5 sm:pt-5 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                 @foreach ($posts as $post)
-                    <article class="flex max-w-xl flex-col items-start justify-between bg-white rounded-lg shadow-md p-6">
+                    <article class="flex flex-col items-start justify-between bg-white rounded-lg shadow-md p-6 lg:max-w-none">
                         <div class="flex items-center gap-x-4 text-xs">
                             <time datetime="2020-03-16" class="text-gray-500">{{ $post->created_at }}</time>
                             <a href="#" class="relative ml-2 z-10 rounded-full bg-blue-100 px-3 py-1.5 font-medium text-gray-600 hover:bg-blue-300"><strong>Category:</strong> {{ $post->category->title }}</a>

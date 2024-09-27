@@ -22,11 +22,11 @@ class DatabaseSeeder extends Seeder
 
         CategoryFactory::times(6)->create();
 
-        TagFactory::times(6)->create();
+        TagFactory::times(10)->create();
 
-        PostFactory::times(10)->create();
+        PostFactory::times(40)->create();
 
-        CommentFactory::times(20)->create();
+        CommentFactory::times(60)->create();
 
     }
 }
