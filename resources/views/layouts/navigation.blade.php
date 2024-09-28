@@ -13,11 +13,11 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
-                        {{ __('Posts públics') }}
+                        {{ __('Posts de la Comunitat') }}
                     </x-nav-link>
                     @if(Auth::user())
                     <x-nav-link :href="route('post.my-posts')" :active="request()->routeIs('post.my-posts')">
-                        {{ __('Els meus posts') }}
+                        {{ __('Els meus Posts') }}
                     </x-nav-link>
                     @endif
                 </div>
@@ -85,7 +85,10 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
-                {{ __('Posts públics') }}
+                {{ __('Posts de la Cumunitat') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('post.my-posts')" :active="request()->routeIs('post.my-posts')">
+                {{ __('Els meus Posts') }}
             </x-responsive-nav-link>
         </div>
 

@@ -48,9 +48,12 @@ class PostController extends Controller
         $post->url_clean = $request->url_clean;
         $post->content = $request->content;
         $post->category_id = $request->category_id;
-        $post->user_id= Auth::user()->id;
+        $post->user_id= Auth::id();
 
         $post->save();
+
+        // Sicronitzem tags
+        $post->tags()->sync($request->input('tags', []));
 
         return redirect()->route('post.my-posts')->with('success', __('Post creat correctament'));
     }
@@ -79,6 +82,10 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post):RedirectResponse
     {
         $post->update($request->all());
+
+        // Sicronitzem tags
+        $post->tags()->sync($request->input('tags', []));
+
         return redirect()->route('post.my-posts')->with('success', __('Post actualitzat correctament'));
 
     }
