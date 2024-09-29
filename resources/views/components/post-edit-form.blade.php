@@ -38,7 +38,7 @@
                                 class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             @foreach($tags as $tag)
                                 <option value="{{ $tag->id }}"
-                                    {{ $post->tags->contains($tag->id) ? 'selected' : '' }}>
+                                    {{ (isset($post) && $post->tags->contains($tag->id)) ? 'selected' : '' }}>
                                     {{ $tag->title }}
                                 </option>
                             @endforeach

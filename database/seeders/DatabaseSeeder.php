@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class
         ]);
 
-        CategoryFactory::times(6)->create();
+        CategoryFactory::times(10)->create();
 
         TagFactory::times(10)->create();
 

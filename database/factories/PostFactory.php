@@ -25,7 +25,7 @@ class PostFactory extends Factory
             'url_clean' => fake()->url(),
             'content' => fake()->paragraphs(2, true),
             'posted' => fake()->randomElement(['yes', 'not']),
-            'category_id' => Category::all()->random()->id,
+            'category_id' => Category::take(6)->get()->random()->id,
             'user_id' => User::all()->random()->id,
         ];
     }

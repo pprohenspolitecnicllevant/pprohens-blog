@@ -17,14 +17,17 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy("created_at" , "desc")->where('posted', 'yes')->get();
-        return view('post.index', compact('posts'));
+        // $posts = Post::orderBy("created_at" , "desc")->where('posted', 'yes')->get();
+        // return view('post.index', compact('posts'));
+
+        return view('post.index');
     }
 
     public function myPosts()
     {
-        $posts = Post::orderBy("created_at" , "desc")->where('user_id', Auth::id())->get();
-        return view('post.my-posts', compact('posts'));
+        // $posts = Post::orderBy("created_at" , "desc")->where('user_id', Auth::id())->get();
+        // return view('post.my-posts', compact('posts'));
+        return view('post.my-posts');
     }
 
     /**
@@ -48,6 +51,7 @@ class PostController extends Controller
         $post->url_clean = $request->url_clean;
         $post->content = $request->content;
         $post->category_id = $request->category_id;
+        $post->posted = $request->posted;
         $post->user_id= Auth::id();
 
         $post->save();
@@ -94,9 +98,9 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      */
 
-    public function destroy(Post $post)
+    public function destroy(Post $post):RedirectResponse
     {
         $post->delete();
-        return back()->with('success', __('Post ELIMINAT correctament'));
+        return redirect()->route('post.my-posts')->with('success', __('Post eliminat correctament'));
     }
 }
